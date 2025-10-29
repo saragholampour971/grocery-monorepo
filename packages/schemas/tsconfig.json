@@ -1,0 +1,15 @@
+{
+  "extends": "@grocery-repo/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "module": "NodeNext",           // ESM-friendly
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,           // skip zod .d.cts errors
+    "strict": true,
+    "target": "ES2022"
+  },
+  "include": ["**/*.ts"]
+}

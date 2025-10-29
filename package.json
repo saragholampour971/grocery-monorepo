@@ -1,9 +1,9 @@
 {
-  "name": "Grocery-repo",
-  "private": true,
+  "name": "grocery-repo",
+  "type": "module",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "build": "yarn turbo run build --filter=backend && concurrently 'yarn turbo run start --filter=backend' 'yarn turbo run build --filter=frontend'",
+    "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
@@ -16,7 +16,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@1.22.18",
+  "packageManager": "yarn@4.10.3",
   "workspaces": [
     "apps/*",
     "packages/*"

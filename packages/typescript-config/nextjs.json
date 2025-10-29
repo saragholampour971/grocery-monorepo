@@ -1,12 +1,21 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./base.json",
   "compilerOptions": {
-    "plugins": [{ "name": "next" }],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowJs": true,
     "jsx": "preserve",
-    "noEmit": true
-  }
+    "incremental": true,
+    "allowJs": true,
+    "types": [
+      "node",
+      "next",
+      "next/types/global"
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

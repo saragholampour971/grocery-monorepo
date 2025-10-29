@@ -1,0 +1,42 @@
+import { NextResponse } from 'next/server';
+import { adminAuth } from '@/lib/firebaseAdmin';
+import { loginResponseType } from '@grocery-repo/schemas';
+
+export async function POST(req: Request): Promise<NextResponse<loginResponseType>> {
+
+  try {
+    const token = req.headers.get('Authorization');
+    console.log('token', token);
+    if (!token) {
+      return NextResponse.json({ success: false, error: 'user not found', status: 401 });
+    }
+    const decodedToken = await adminAuth.verifyIdToken(token);
+    decodedToken.console.log(decodedToken, 'decodedToken');
+
+    const res = NextResponse.json({
+      data: {
+        uid: decodedToken.uid || null,
+        email: decodedToken.email || null,
+      },
+    });
+    res.cookies.set('token', token, {
+      // httpOnly: true,
+      // secure: process.env.NODE_ENV === 'production',
+      // sameSite: 'strict',
+      // path: '/',
+      // maxAge: 3600,
+      httpOnly: true,          // JS cannot access
+      secure: true,            // only HTTPS
+      // sameSite: "None",        // allow cross-site cookie
+      domain: 'frontend.com',  // optional, set for cross-domain
+      maxAge: 1000 * 60 * 60,  // 1 hour
+    });
+
+    return res;
+
+  } catch (e) {
+    console.error(e, ' catch e from post');
+    return NextResponse.json({ success: false, error: 'user not found', status: 401 });
+  }
+
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@grocery-repo/schemas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "exports": {
+    ".": "./index.ts"
+  }
+}
