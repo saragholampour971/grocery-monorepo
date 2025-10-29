@@ -1,11 +1,11 @@
-import { adminDb } from '@/lib/firebaseAdmin'
-import {IProduct, ProductsParams, ProductsPathParam, ProductsResponse} from '@/packages/schemas/products'
-import { NextResponse } from 'next/server'
-import {ZodError} from 'zod/v4'
+import { adminDb } from '@/lib/firebaseAdmin';
+import { ProductsParams, ProductsPathParam, ProductsResponse, ProductType } from '@grocery-repo/schemas';
+import { NextResponse } from 'next/server';
+import { ZodError } from 'zod/v4';
 
 export async function GET(
   req: Request,
-  context: { params: Promise<ProductsParams> }
+  context: { params: Promise<ProductsParams> },
 ): Promise<NextResponse<ProductsResponse>> {
   try {
     const params = await context.params;
@@ -15,21 +15,21 @@ export async function GET(
     const productsSnapshot = await adminDb
       .collection('products')
       .where('categoryId', '==', categoryId)
-      .get()
+      .get();
 
-    const products: IProduct[] = await Promise.all(
+    const products: ProductType[] = await Promise.all(
       productsSnapshot.docs.map(async (doc) => {
-        const data = doc.data()
+        const data = doc.data();
 
         // گرفتن category name
         const categoryDoc = await adminDb
           .collection('categories')
           .doc(data.categoryId)
-          .get()
+          .get();
 
         const categoryName = categoryDoc.exists
           ? categoryDoc.data()?.title
-          : null
+          : null;
 
         return {
           id: doc.id,
@@ -39,11 +39,11 @@ export async function GET(
           categoryId: data.categoryId,
           categoryName, // اضافه شده
           description: data.description,
-        }
-      })
-    )
+        };
+      }),
+    );
 
-    return NextResponse.json({ data: products })
+    return NextResponse.json({ data: products });
   } catch (error) {
     if (error instanceof ZodError) {
       // Handle validation errors (e.g., invalid categoryId)
@@ -53,7 +53,7 @@ export async function GET(
     }
 
     return NextResponse.json(
-      { error: 'Failed to fetch products',status: 500 },
-    )
+      { error: 'Failed to fetch products', status: 500 },
+    );
   }
 }

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=3000 next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "PORT=3000 next start",
     "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives",

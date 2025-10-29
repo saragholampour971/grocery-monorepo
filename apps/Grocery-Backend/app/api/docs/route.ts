@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server';
 import { createDocument } from 'zod-openapi';
-import { ProductsPathParam, ProductsResponseSchema } from '@/packages/schemas/products';
-import { ExclusiveOffersResponseSchema } from '@/packages/schemas/exclusive-offers';
-import { loginResponseSchema } from '@grocery-repo/schemas';
+import {
+  AddCartParamsSchema,
+  BannerResponseSchema,
+  CartResponseSchema,
+  CategoryResponseSchema,
+  ExclusiveOffersResponseSchema,
+  LoginResponseSchema,
+  MeSchema,
+  ProductsPathParam,
+  ProductsResponseSchema,
+} from '@grocery-repo/schemas';
 
 
 // تولید مستندات OpenAPI
@@ -51,13 +59,94 @@ const document = createDocument({
             description: 'logged in successfully',
             content: {
               'application/json': {
-                schema: loginResponseSchema,
+                schema: LoginResponseSchema,
               },
             },
           },
         },
       },
     },
+    '/api/logout': {
+      post: {
+        responses: {
+          '200': {
+            description: 'logged out successfully',
+          },
+        },
+      },
+    },
+    '/api/me': {
+      get: {
+        responses: {
+          '200': {
+            description: 'get logged in user ',
+            content: {
+              'application/json': {
+                schema: MeSchema,
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/banner': {
+      get: {
+        responses: {
+          '200': {
+            description: 'get banner image',
+            content: {
+              'application/json': {
+                schema: BannerResponseSchema,
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/cart': {
+      get: {
+        responses: {
+          '200': {
+            description: 'get cart successfully',
+            content: {
+              'application/json': {
+                schema: CartResponseSchema,
+              },
+            },
+          },
+        },
+      },
+      post: {
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: AddCartParamsSchema,
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: ' successfully added to cart',
+          },
+        },
+      },
+    },
+    'api/category': {
+      get: {
+        responses: {
+          '200': {
+            description: 'get category successfully',
+            content: {
+              'application/json': {
+                schema: CategoryResponseSchema,
+              },
+            },
+          },
+        },
+      },
+    },
+
   },
 });
 

@@ -1,19 +1,18 @@
 import { adminDb } from '@/lib/firebaseAdmin';
 import { NextResponse } from 'next/server';
-import { Banner, BannerResponse } from '@/packages/schemas/banner';
+import { BannerResponseType, BannerType } from '@grocery-repo/schemas';
 
-export async function GET(): Promise<NextResponse<BannerResponse>> {
+export async function GET(): Promise<NextResponse<BannerResponseType>> {
   try {
     const snapshot = await adminDb.collection('banner').get();
-    const banners: Banner[] = snapshot.docs.map((doc) => ({
+    const banners: BannerType[] = snapshot.docs.map((doc) => ({
       id: +doc.id,
       imageUrl: doc.data().imageUrl,
     }));
     return NextResponse.json({ data: banners });
   } catch {
     return NextResponse.json(
-      { error: 'Failed to fetch banner' },
-      { status: 500 },
+      { error: 'Failed to fetch banner', status: 500 },
     );
   }
 }

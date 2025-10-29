@@ -1,14 +1,14 @@
-import { NextResponse } from 'next/server';
-import { adminAuth } from '@/lib/firebaseAdmin';
-import { loginResponseType } from '@grocery-repo/schemas';
+import {NextResponse} from 'next/server';
+import {adminAuth} from '@/lib/firebaseAdmin';
+import {LoginResponseType} from '@grocery-repo/schemas';
 
-export async function POST(req: Request): Promise<NextResponse<loginResponseType>> {
+export async function POST(req: Request): Promise<NextResponse<LoginResponseType>> {
 
   try {
     const token = req.headers.get('Authorization');
     console.log('token', token);
     if (!token) {
-      return NextResponse.json({ success: false, error: 'user not found', status: 401 });
+      return NextResponse.json({success: false, error: 'user not found', status: 401});
     }
     const decodedToken = await adminAuth.verifyIdToken(token);
     decodedToken.console.log(decodedToken, 'decodedToken');
@@ -36,7 +36,7 @@ export async function POST(req: Request): Promise<NextResponse<loginResponseType
 
   } catch (e) {
     console.error(e, ' catch e from post');
-    return NextResponse.json({ success: false, error: 'user not found', status: 401 });
+    return NextResponse.json({success: false, error: 'user not found', status: 401});
   }
 
 }

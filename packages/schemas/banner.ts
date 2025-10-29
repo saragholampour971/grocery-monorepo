@@ -1,8 +1,13 @@
-import { ApiResponse } from './globalTypes'
+import { ApiResponseSchema } from "./globalTypes";
+import { z } from "zod/v4";
 
-export type Banner = {
-  id: number
-  imageUrl: string
-}
+//schema
+export const BannerSchema = z.object({
+  id: z.number(),
+  imageUrl: z.string(),
+});
+export const BannerResponseSchema = ApiResponseSchema(z.array(BannerSchema));
 
-export type BannerResponse = ApiResponse<Banner[]>
+//type
+export type BannerType = z.infer<typeof BannerSchema>;
+export type BannerResponseType = z.infer<typeof BannerResponseSchema>;
