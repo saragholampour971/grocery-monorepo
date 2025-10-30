@@ -1,5 +1,5 @@
-import {ProductsResponse, ProductsResponseSchema} from "./products";
+import { ProductsResponseSchema, ProductsResponseType } from "./products";
 
 export const ExclusiveOffersResponseSchema = ProductsResponseSchema;
 
-export type ExclusiveOffersResponse = ProductsResponse
+export type ExclusiveOffersResponseType = ProductsResponseType;

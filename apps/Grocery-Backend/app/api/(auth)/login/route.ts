@@ -1,6 +1,6 @@
-import {NextResponse} from 'next/server';
-import {adminAuth} from '@/lib/firebaseAdmin';
-import {LoginResponseType} from '@grocery-repo/schemas';
+import { NextResponse } from 'next/server';
+import { adminAuth } from '@/lib/firebaseAdmin';
+import { LoginResponseType } from '@grocery-repo/schemas';
 
 export async function POST(req: Request): Promise<NextResponse<LoginResponseType>> {
 
@@ -8,7 +8,7 @@ export async function POST(req: Request): Promise<NextResponse<LoginResponseType
     const token = req.headers.get('Authorization');
     console.log('token', token);
     if (!token) {
-      return NextResponse.json({success: false, error: 'user not found', status: 401});
+      return NextResponse.json({ success: false, error: 'user not found', status: 401 });
     }
     const decodedToken = await adminAuth.verifyIdToken(token);
     decodedToken.console.log(decodedToken, 'decodedToken');
@@ -21,14 +21,12 @@ export async function POST(req: Request): Promise<NextResponse<LoginResponseType
     });
     res.cookies.set('token', token, {
       // httpOnly: true,
-      // secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production',
       // sameSite: 'strict',
       // path: '/',
-      // maxAge: 3600,
       httpOnly: true,          // JS cannot access
-      secure: true,            // only HTTPS
       // sameSite: "None",        // allow cross-site cookie
-      domain: 'frontend.com',  // optional, set for cross-domain
+      // domain: 'frontend.com',  // optional, set for cross-domain
       maxAge: 1000 * 60 * 60,  // 1 hour
     });
 
@@ -36,7 +34,7 @@ export async function POST(req: Request): Promise<NextResponse<LoginResponseType
 
   } catch (e) {
     console.error(e, ' catch e from post');
-    return NextResponse.json({success: false, error: 'user not found', status: 401});
+    return NextResponse.json({ success: false, error: 'user not found', status: 401 });
   }
 
 }

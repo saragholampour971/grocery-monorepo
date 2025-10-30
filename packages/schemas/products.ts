@@ -23,4 +23,4 @@ export const ProductsResponseSchema = ApiResponseSchema(z.array(ProductSchema));
 // types
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductsParams = z.infer<typeof ProductsPathParam>;
-export type ProductsResponse = z.infer<typeof ProductsResponseSchema>;
+export type ProductsResponseType = z.infer<typeof ProductsResponseSchema>;

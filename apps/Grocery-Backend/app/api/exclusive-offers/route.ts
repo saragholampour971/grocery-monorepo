@@ -1,8 +1,8 @@
 import { adminDb } from '@/lib/firebaseAdmin';
 import { NextResponse } from 'next/server';
-import { ExclusiveOffersResponse, ProductType } from '@grocery-repo/schemas';
+import { ExclusiveOffersResponseType, ProductType } from '@grocery-repo/schemas';
 
-export async function GET(): Promise<NextResponse<ExclusiveOffersResponse>> {
+export async function GET(): Promise<NextResponse<ExclusiveOffersResponseType>> {
   try {
     const snapshot = await adminDb.collection('products').get();
     const posts: ProductType[] = snapshot.docs.map((doc) => ({

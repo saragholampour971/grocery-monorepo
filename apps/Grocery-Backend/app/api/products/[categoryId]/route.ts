@@ -1,12 +1,12 @@
 import { adminDb } from '@/lib/firebaseAdmin';
-import { ProductsParams, ProductsPathParam, ProductsResponse, ProductType } from '@grocery-repo/schemas';
+import { ProductsParams, ProductsPathParam, ProductsResponseType, ProductType } from '@grocery-repo/schemas';
 import { NextResponse } from 'next/server';
 import { ZodError } from 'zod/v4';
 
 export async function GET(
   req: Request,
   context: { params: Promise<ProductsParams> },
-): Promise<NextResponse<ProductsResponse>> {
+): Promise<NextResponse<ProductsResponseType>> {
   try {
     const params = await context.params;
     // Throws ZodError if invalid (e.g., no categoryId)
