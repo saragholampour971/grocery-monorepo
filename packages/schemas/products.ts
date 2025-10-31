@@ -7,10 +7,10 @@ export const ProductSchema = z.object({
   categoryName: z.string().optional(),
   title: z.string(),
   imageUrl: z.string(),
-  price: z.number(),
+  price: z.coerce.number(),
   description: z.string(),
 });
-
+export const ProductsSchema = z.array(ProductSchema);
 export const ProductsPathParam = z.object({
   categoryId: z.string().meta({
     description: "Unique Category ID",
@@ -18,7 +18,7 @@ export const ProductsPathParam = z.object({
   }),
 });
 
-export const ProductsResponseSchema = ApiResponseSchema(z.array(ProductSchema));
+export const ProductsResponseSchema = ApiResponseSchema(ProductsSchema);
 
 // types
 export type ProductType = z.infer<typeof ProductSchema>;

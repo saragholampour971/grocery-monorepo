@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { createDocument } from 'zod-openapi';
 import {
   AddCartParamsSchema,
-  BannerResponseSchema,
+  BannersResponseSchema,
   CartResponseSchema,
-  CategoryResponseSchema,
+  CategoriesResponseSchema,
   ExclusiveOffersResponseSchema,
   LoginResponseSchema,
   MeSchema,
@@ -96,7 +96,7 @@ const document = createDocument({
             description: 'get banner image',
             content: {
               'application/json': {
-                schema: BannerResponseSchema,
+                schema: BannersResponseSchema,
               },
             },
           },
@@ -136,10 +136,10 @@ const document = createDocument({
       get: {
         responses: {
           '200': {
-            description: 'get category successfully',
+            description: ' success',
             content: {
               'application/json': {
-                schema: CategoryResponseSchema,
+                schema: CategoriesResponseSchema,
               },
             },
           },

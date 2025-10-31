@@ -1,30 +1,28 @@
 import { z } from "zod/v4";
-import { NextResponse } from "next/server";
 
-export interface ErrorResponse {
-  error?: string;
-  status?: number;
-}
-
-export type ApiResponse<T> = { data?: T } & ErrorResponse;
-
-const ErrorResponseSchema = z.object({
+//schema
+const FailResponseSchema = z.object({
   error: z.string().optional(),
   status: z.number().optional(),
 });
 
+export const SuccessResponseSchema = <T extends z.ZodType>(schema: T) =>
+  z.object({
+    data: schema,
+  });
+
 export const ApiResponseSchema = <T extends z.ZodType>(schema: T) =>
-  z
-    .object({
-      data: schema.optional(),
-    })
-    .merge(ErrorResponseSchema)
-    // MUST have EITHER data OR error
-    .refine((val) => (val.data !== undefined) !== (val.error !== undefined), {
-      message:
-        'Response must contain EITHER "data" OR "error" fields, but not both.',
-    });
+  SuccessResponseSchema(schema).or(FailResponseSchema);
 
-export type ZErrorResponse = z.infer<typeof ErrorResponseSchema>;
+export const VoidSchema = z.void();
 
-export type VoidResponse = Promise<NextResponse<ApiResponse<void>>>;
+//type
+export type SuccessResponseType<T extends z.ZodType<any>> = z.infer<
+  ReturnType<typeof SuccessResponseSchema<T>>
+>;
+
+export type ApiResponse<T extends z.ZodType<any>> = z.infer<
+  ReturnType<typeof ApiResponseSchema<T>>
+>;
+
+export type VoidResponse = ApiResponse<typeof VoidSchema>;

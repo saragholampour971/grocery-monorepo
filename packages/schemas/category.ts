@@ -7,10 +7,9 @@ export const CategorySchema = z.object({
   imageUrl: z.string(),
   title: z.string(),
 });
-export const CategoryResponseSchema = ApiResponseSchema(
-  z.array(CategorySchema),
-);
+export const CategoriesSchema = z.array(CategorySchema);
+export const CategoriesResponseSchema = ApiResponseSchema(CategoriesSchema);
 
 //type
-export type Category = z.infer<typeof CategorySchema>;
-export type CategoryResponse = z.infer<typeof CategoryResponseSchema>;
+export type CategoriesType = z.infer<typeof CategoriesSchema>;
+export type CategoriesResponseType = z.infer<typeof CategoriesResponseSchema>;

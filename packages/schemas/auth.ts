@@ -2,14 +2,13 @@ import { ApiResponseSchema } from "./globalTypes";
 import { z } from "zod/v4";
 
 //schema
-export const loginSchema = z.object({
+export const LoginSchema = z.object({
   email: z.string().nullable(),
-  uid: z.string().nullable()
+  uid: z.string().nullable(),
 });
-export const LoginResponseSchema = ApiResponseSchema(loginSchema);
-export const MeSchema = LoginResponseSchema;
+export const MeSchema = LoginSchema;
+export const LoginResponseSchema = ApiResponseSchema(LoginSchema);
 
 //type
-export type MeResponse = z.infer<typeof LoginResponseSchema>;
-export type Me = z.infer<typeof loginSchema>;
+export type Me = z.infer<typeof LoginSchema>;
 export type LoginResponseType = z.infer<typeof LoginResponseSchema>;

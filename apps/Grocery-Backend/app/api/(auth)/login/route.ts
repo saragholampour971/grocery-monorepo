@@ -6,12 +6,10 @@ export async function POST(req: Request): Promise<NextResponse<LoginResponseType
 
   try {
     const token = req.headers.get('Authorization');
-    console.log('token', token);
     if (!token) {
       return NextResponse.json({ success: false, error: 'user not found', status: 401 });
     }
     const decodedToken = await adminAuth.verifyIdToken(token);
-    decodedToken.console.log(decodedToken, 'decodedToken');
 
     const res = NextResponse.json({
       data: {

@@ -9,7 +9,7 @@ export async function GET(): Promise<NextResponse<ExclusiveOffersResponseType>> 
       id: doc.id,
       imageUrl: doc.data().imageUrl,
       title: doc.data().title,
-      price: doc.data().price,
+      price: +doc.data().price,
       description: doc.data().description,
       categoryName: doc.data().category,
     }));

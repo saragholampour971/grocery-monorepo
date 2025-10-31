@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/serverAuth';
 import { adminDb } from '@/lib/firebaseAdmin';
-import { ApiResponse, CartItemType, CartResponse, VoidResponse } from '@grocery-repo/schemas';
+import { CartItemType, CartResponseType, VoidResponse } from '@grocery-repo/schemas';
 import { FieldPath } from 'firebase-admin/firestore';
 
-export async function GET(): Promise<NextResponse<CartResponse>> {
+export async function GET(): Promise<NextResponse<CartResponseType>> {
   // گرفتن کاربر جاری
   const user = await getCurrentUser();
   if (!user) {
@@ -57,7 +57,7 @@ export async function GET(): Promise<NextResponse<CartResponse>> {
   return NextResponse.json({ data: cart });
 }
 
-export async function POST(req: Request): Promise<NextResponse<ApiResponse<void>>> {
+export async function POST(req: Request): Promise<NextResponse<VoidResponse>> {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -87,7 +87,7 @@ export async function POST(req: Request): Promise<NextResponse<ApiResponse<void>
   return NextResponse.json({ status: 200 });
 }
 
-export async function DELETE(req: Request): VoidResponse {
+export async function DELETE(req: Request): Promise<NextResponse<VoidResponse>> {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized', status: 401 });

@@ -1,11 +1,11 @@
 import { adminDb } from '@/lib/firebaseAdmin';
 import { NextResponse } from 'next/server';
-import { Category, CategoryResponse } from '@grocery-repo/schemas';
+import { CategoriesResponseType, CategoriesType } from '@grocery-repo/schemas';
 
-export async function GET(): Promise<NextResponse<CategoryResponse>> {
+export async function GET(): Promise<NextResponse<CategoriesResponseType>> {
   try {
     const snapshot = await adminDb.collection('categories').get();
-    const category: Category[] = snapshot.docs.map((doc) => ({
+    const category: CategoriesType = snapshot.docs.map((doc) => ({
       id: doc.id,
       imageUrl: doc.data().imageUrl,
       title: doc.data().title,
