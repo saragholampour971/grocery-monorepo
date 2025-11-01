@@ -34,7 +34,7 @@ yarn-debug.log*
 yarn-error.log*
 turbo-build.log*
 turbo-start.log*
-
+.turbo/
 
 # Misc
 .DS_Store
